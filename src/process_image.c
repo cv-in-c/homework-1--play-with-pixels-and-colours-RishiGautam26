@@ -19,7 +19,13 @@ void set_pixel(image im, int x, int y, int c, float v)
 image copy_image(image im)
 {
     image copy = make_image(im.w, im.h, im.c);
-    // TODO Fill this in
+    for ( int i = 0 ; i < im.c ; i++){
+        for ( int j = 0 ; j < im.h ; j++ ){
+            for ( int k = 0 ; k < im.w ; k++){
+                set_pixel(copy, k, j, i, get_pixel(im, k, j, i));
+            }
+        }
+    }
     return copy;
 }
 
