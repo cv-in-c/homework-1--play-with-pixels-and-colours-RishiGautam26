@@ -6,8 +6,9 @@
 
 float get_pixel(image im, int x, int y, int c)
 {
-    // TODO Fill this in
-    return 0;
+    float value ;
+    value = im.data[c*im.x*im.y + y*im.x + x] ;
+    return value;
 }
 
 void set_pixel(image im, int x, int y, int c, float v)
