@@ -6,7 +6,8 @@
 
 float get_pixel(image im, int x, int y, int c)
 {
-    return im.data[c*im.w*im.h + y*im.w + x];
+    // TODO Fill this in
+    return 0;
 }
 
 void set_pixel(image im, int x, int y, int c, float v)
@@ -17,14 +18,7 @@ void set_pixel(image im, int x, int y, int c, float v)
 image copy_image(image im)
 {
     image copy = make_image(im.w, im.h, im.c);
-    for (int i = 0 ; i < im.c ; i++){
-        for ( int j = 0 ; j < im.h ; j++){
-            for ( int k = 0 ; k < im.w ; k++){
-                set_pixel( copy , k , j , i , get_pixel( im , k , j , i));
-            }
-        }
-    }
-
+    // TODO Fill this in
     return copy;
 }
 
