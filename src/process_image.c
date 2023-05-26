@@ -132,5 +132,69 @@ void rgb_to_hsv(image im)
 
 void hsv_to_rgb(image im)
 {
-    // TODO Fill this in
+    float r, g, b ;
+    for ( int i = 0 ; i < im.h ; i++){
+        for ( int j = 0 ; j < im.w ; j++){
+            h = im.data[ i*im.w + j ] ;
+            s = im.data[ im.h*im.w + i*im.w + j];
+            v = im.data[ 2*im.h*im.w + i*im.w + j ];
+            r = im.data[ i*im.w + j ] ;
+            g = im.data[ im.h*im.w + i*im.w + j];
+            b = im.data[ 2*im.h*im.w + i*im.w + j ];
+            
+            if ( s = 0 ) {
+                r = v;
+                g = v;
+                b = v;
+            }
+
+            else {
+                float a = floor( h*6 ) ;
+                float b = h*6 - i ;
+                float c = v*(1-s) ;
+                float d = v*(1-s*b) ;
+                float e = v*( 1 - s*(1-b) ) ;
+
+                switch ( (int)i%6 ) {
+                    case 0:
+                        r = v ;
+                        g = e ;
+                        b = c ;
+                        break ;
+
+                    case 1:
+                        r = d ;
+                        g = v ;
+                        b = c ;
+                        break;
+
+                    case 2:
+                        r = c;
+                        g = v;
+                        b = e;
+                        break;
+
+                    case 3:
+                        r = c; 
+                        g = d;
+                        b = v;
+                        break;
+
+                    case 4:
+                        r = e;
+                        g = c;
+                        b = v;
+                        break;
+
+                    case 5:
+                        r = v;
+                        g = c;
+                        b = d;
+                        break;
+                }
+            }
+
+        }
+    }
+
 }
