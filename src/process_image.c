@@ -6,8 +6,7 @@
 
 float get_pixel(image im, int x, int y, int c)
 {
-    // TODO Fill this in
-    return 0;
+    return im.data[ c*im.w*im.h + y*im.w + x ];
 }
 
 void set_pixel(image im, int x, int y, int c, float v)
@@ -18,7 +17,13 @@ void set_pixel(image im, int x, int y, int c, float v)
 image copy_image(image im)
 {
     image copy = make_image(im.w, im.h, im.c);
-    // TODO Fill this in
+    for (int i = 0 ; i < im.c ; i++){
+        for ( int j = 0 ; j < im.h ; j++){
+            for ( int k = 0 ; k < im.w ; k++){
+                set_pixel( copy , k , j , i , get_pixel( im , k , j , i));
+            }
+        }
+    }
     return copy;
 }
 
@@ -75,7 +80,44 @@ float three_way_min(float a, float b, float c)
 
 void rgb_to_hsv(image im)
 {
-    // TODO Fill this in
+    //for V 
+    float V, C, m, S, H1, H;
+    for ( int i = 0 ; i < im.h ; i++){
+        for ( int j = 0 ; j < im.w ; j++){
+            V = three_way_max( get_pixel(im, j, i, 0) , get_pixel(im, j, i, 1) , get_pixel(im, j, i, 2));
+            m = three_way_min( get_pixel(im, j, i, 0) , get_pixel(im, j, i, 1) , get_pixel(im, j, i, 2) );
+            C = V - m ;
+
+            if ( V == 0) S = 0 ;
+            else if ( V != 0) S = C/V ;
+
+            if ( C == 0 ) {
+                H1 = 0 ;
+                H = 0 ;
+            }
+            else if ( V == get_pixel(im, j, i, 0) ){
+                H1 = (get_pixel(im, j, i, 1) - get_pixel(im, j, i, 2))/C ;
+                if ( H1 < 0 ){
+                    H = H1/6 + 1 ;
+                }
+                else H = H1/6 ;
+            }
+            else if ( V == get_pixel(im, j, i, 1) ){
+                H1 = (get_pixel(im, j, i, 2) - get_pixel(im, j, i, 0))/C + 2 ;
+                if ( H1 < 0 ) H = H1/6 + 1 ;
+                else H = H1/6 ;
+            }
+            else if ( V == get_pixel(im, j, i, 2) ){
+                H1 = ( get_pixel(im, j, i, 0 ) - get_pixel(im, j, i, 1) )/C + 4 ;
+                if ( H1 < 0 ) H = H1/6 + 1 ;
+                else H = H1/6 ;
+            }
+
+            set_pixel( im , j, i, 0, H);
+            set_pixel( im , j, i, 1, S);
+            set_pixel( im , j, i, 2, V);            
+        }
+    }
 }
 
 void hsv_to_rgb(image im)
